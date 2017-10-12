@@ -1,0 +1,60 @@
+---
+title: "EDA Serguro Driver Safety"
+author: "Kensen Tan"
+date: "October 11, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r pre-processing}
+
+train = read.csv("../data/train.csv", stringsAsFactors = F)
+train = train[,-1] #remove userid
+train_cont = train[, -grep(paste(c("cat","bin"), collapse="|"), names(train))]
+train_cat_bin = train[, c(1,grep(paste(c("cat","bin"), collapse="|"), names(train)))]
+
+```
+
+
+
+#########################################
+##Extract Significant Correlation Pairs##
+#########################################
+```{r correlation pairs}
+
+corr_threshold = 0.15
+pvalue_threshold = 0.05
+sig_corr = data.frame(Relationship = character(), Correlation = double(), P_Value = double(), stringsAsFactors = F)
+
+for (i in 1:ncol(train_cont)){
+  for (j in 1:ncol(train_cont)){
+    
+    ctest = cor.test(train_cont[,i], train_cont[, j])
+    
+    if(i != j && ctest$p.value < pvalue_threshold && ctest$estimate > corr_threshold){
+        new_row = data.frame(relationship = paste0(names(train_cont)[i], " vs ", names(train_cont)[j]), 
+                             correlation = ctest$estimate, p_value = ctest$p.value, row.names = NULL)
+        sig_corr = rbind(sig_corr, new_row)
+    }
+    
+  }
+}
+
+print(sig_corr)
+```
+
+
+#########################################
+##Information Value #####################
+#########################################
+
+#To be continued
+```{r information value}
+
+
+
+```
