@@ -2,7 +2,9 @@
 title: "EDA Serguro Driver Safety"
 author: "Kensen Tan"
 date: "October 11, 2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -93,4 +95,11 @@ for (i in 2:ncol(train_cat_bin)){
 print(IV_table[order(IV_table$IV_, decreasing = T),])
 ```
 No categorical/binary features have high IV values. (all of them are conidered "not predictive" by the IV table).
-More info about IV can be found [here](http://documentation.statsoft.com/STATISTICAHelp.aspx?path=WeightofEvidence/WeightofEvidenceWoEIntroductoryOverview).
+More info about IV and WoE: [http://documentation.statsoft.com/STATISTICAHelp.aspx?path=WeightofEvidence/WeightofEvidenceWoEIntroductoryOverview](http://documentation.statsoft.com/STATISTICAHelp.aspx?path=WeightofEvidence/WeightofEvidenceWoEIntroductoryOverview).
+
+###PCA
+
+```{r}
+
+```
+
